@@ -81,8 +81,13 @@ players = {
 }
 
 # Set some parameters
+# Change numtrials to run a larger trial: 999 is way too small for serious analysis
 numtrials = 999
+
+# set quota to the number of votes needed to win the election
 quota = 270
+
+# Compute some other parameters for convenience
 numplayers = len(players)
 total_population = sum(players[player][pop_key] for player in players)
 total_votes = sum(players[player][vote_key] for player in players)
@@ -90,9 +95,10 @@ total_votes = sum(players[player][vote_key] for player in players)
 # Set up a dict to store results
 player_pivot_counts = {player: 0 for player in players}
 
+# Create a list of players which can be shuffled
 player_list = sorted(players)
 
-# Find the pivot player in a specified ordering
+# Function to find the pivot player in a specified ordering
 def find_pivot (players_ordered):
     votes_ordered = [players[player][vote_key] for player in players_ordered]
     winners = (i for i in xrange(numplayers) if sum(votes_ordered[:i+1]) >= quota)
